@@ -8,59 +8,23 @@
      struct Node *next;
   }
 */
-#include <vector>
-
-void print_vector(vector <int> arr)
-{
-    for (int i = 0; i < arr.size(); i++)
-    {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
-
-void print_linkedList(Node* head)
-{
-    Node* temp = head;
-    while (temp != 0)
-    {
-        cout << temp->data << " ";
-        temp = temp->next;
-    }
-    cout << endl;
-}
 
 Node* Reverse(Node *head)
 {
-    // Complete this method
-    
-    if (head == 0)
-        return 0;
+    if (head == 0 || head->next == 0)
+        return head;
     else
     {
-        vector <int> values;
-        Node* temp = head;
-        while (temp != 0)
-        {
-            values.push_back(temp->data);
-            temp = temp->next;
-        }
+        // Start @ begining of list
+        Node* first = head;
+        Node* rest = first->next;
         
-        Node* newNode = new Node();
-        newNode->data = values[values.size() - 1];
-        Node* newHead = newNode;
-        Node* temp2 = newHead;
+        // Recursively reverse rest of list
+        Node* remaining = Reverse(rest);
         
-        for (int i = values.size() - 2; i >= 0; i--)
-        {
-            Node* newNode2 = new Node();
-            newNode2->data = values[i];
-            newNode2->next = 0;
-            
-            temp2->next = newNode2;
-            temp2 = temp2->next;
-        }
-        
-        return newHead;
+        // Join reversed portion with the current node
+        first->next->next = first;
+        first->next = 0;
+        return remaining;
     }
 }
